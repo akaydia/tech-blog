@@ -42,7 +42,7 @@ BlogPost.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'blog_post',
+    modelName: 'blogpost',
   } // sequelize
 ); // init method
 

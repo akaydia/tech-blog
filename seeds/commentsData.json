@@ -1,0 +1,22 @@
+[
+    {
+        "content": "Great post!",
+        "user_id": 2,
+        "blogpost_id": 1
+    },
+    {
+        "content": "I really enjoyed reading this.",
+        "user_id": 1,
+        "blogpost_id": 2
+    },
+    {
+        "content": "Thanks for sharing.",
+        "user_id": 3,
+        "blogpost_id": 1
+    },
+    {
+        "content": "Looking forward to your next post.",
+        "user_id": 2,
+        "blogpost_id": 4
+    }
+]

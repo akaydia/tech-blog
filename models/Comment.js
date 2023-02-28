@@ -49,3 +49,5 @@ Comment.init(
     modelName: 'comment',
   } // sequelize
 ); // init method
+
+module.exports = Comment;
