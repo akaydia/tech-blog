@@ -1,12 +1,14 @@
 const router = require('express').Router();
-const { Comment } = require('../../models');
+const { Comment, User } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // Define comment routes 
 // GET all comments
-router.get('/', withAuth, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        const commentData = await Comment.findAll();
+        const commentData = await Comment.findAll({
+            include: [ { model: User, attributes: ['username'] }],
+        });
         const comments = commentData.map((comment) => comment.get({ plain: true }));
         res.status(200).json(comments);
     } catch (err) {
@@ -15,7 +17,7 @@ router.get('/', withAuth, async (req, res) => {
 }); // GET all comments
 
 // POST a new comment
-router.post('/', withAuth, async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const commentData = await Comment.create({
             ...req.body,
@@ -28,7 +30,7 @@ router.post('/', withAuth, async (req, res) => {
 }); // POST a new comment
 
 // DELETE a comment by its ID
-router.delete('/:id', withAuth, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const commentData = await Comment.destroy({
             where: {
