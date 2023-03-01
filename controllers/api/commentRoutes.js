@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 }); // GET all comments
 
 // POST a new comment
-router.post('/', async (req, res) => {
+router.post('/', withAuth, async (req, res) => {
     try {
         const commentData = await Comment.create({
             ...req.body,
@@ -29,8 +29,31 @@ router.post('/', async (req, res) => {
     } // catch
 }); // POST a new comment
 
+// EDIT a comment by its ID
+router.put('/:id', withAuth, async (req, res) => {
+    try {
+        const commentData = await Comment.update(
+            {
+                comment_text: req.body.comment_text,
+            },
+            {
+                where: {
+                    id: req.params.id,
+                },
+            }
+        );
+        if (!commentData) {
+            res.status(404).json({ message: 'No comment found with this id!' });
+            return;
+        } // if
+        res.status(200).json(commentData);
+    } catch (err) {
+        res.status(500).json(err);
+    } // catch
+}); // EDIT a comment by its ID
+
 // DELETE a comment by its ID
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', withAuth, async (req, res) => {
     try {
         const commentData = await Comment.destroy({
             where: {
@@ -46,7 +69,5 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json(err);
     } // catch
 }); // DELETE a comment by its ID
-
-
 
 module.exports = router;

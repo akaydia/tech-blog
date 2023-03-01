@@ -1,5 +1,5 @@
 const router = require('express').Router();
-
+const withAuth = require('../../utils/auth');
 const { User } = require('../../models');
 
 // Define user routes
@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
 }); // GET one user by id
 
 // CREATE a new user
-router.post('/', async (req, res) => {
+router.post('/', withAuth, async (req, res) => {
   try {
     const userData = await User.create({
       username: req.body.username,
@@ -45,7 +45,7 @@ router.post('/', async (req, res) => {
 }); // Create a new user
 
 // UPDATE a user by id
-router.put('/:id', async (req, res) => {
+router.put('/:id', withAuth, async (req, res) => {
   try {
     const userData = await User.update(req.body, {
       where: {
@@ -63,7 +63,7 @@ router.put('/:id', async (req, res) => {
 }); // UPDATE a user by id
 
 // DELETE a user by id
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', withAuth, async (req, res) => {
   try {
     const userData = await User.destroy({
       where: {

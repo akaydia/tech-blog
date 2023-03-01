@@ -1,0 +1,21 @@
+<div class="post">
+  <h1>{{title}}</h1>
+  <p>{{body}}</p>
+  <p>Created by {{user.username}} on {{createdAt}}</p>
+</div>
+<h2>Comments</h2>
+{{#each comments}}
+  <div class="comment">
+    <p>{{body}}</p>
+    <p>Created by {{user.username}} on {{createdAt}}</p>
+  </div>
+{{/each}}
+{{#if logged_in}}
+  <form action="/comment/new/{{id}}" method="POST">
+    <label for="body">Add Comment:</label>
+    <input type="text" name="body" required>
+    <button type="submit">Submit</button>
+  </form>
+{{else}}
+  <p>You must be logged in to leave a comment</p>
+{{/if}}
