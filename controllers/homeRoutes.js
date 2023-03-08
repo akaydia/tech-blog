@@ -38,6 +38,13 @@ router.get('/', async (req, res) => {
 // Define routes for the dashboard
 router.get('/dashboard', async (req, res) => {
   try {
+
+     // Check if the user is authenticated
+     if (!req.session.user_id) {
+      // If the user is not authenticated, redirect them to the login page
+      res.redirect('/login');
+      return;
+    }
     // Get all blog posts for the current user and render them on the dashboard
     const blogPosts = await BlogPost.findAll({
       where: {
@@ -112,10 +119,15 @@ router.get('/login', (req, res) => {
   res.render('login', { layout: 'main' });
 });
 
+// // Define routes for the signup page
+// router.get('/signup', (req, res) => {
+//   // Render the signup view with the main layout
+//   res.render('signup', { layout: 'main' });
+// });
+
 // Define routes for creating a new blog post
 router.get('/post', (req, res) => {
   // Render the post view with the main layout
   res.render('post', { layout: 'main' });
 });
-
 module.exports = router;
