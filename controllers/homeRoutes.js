@@ -38,13 +38,12 @@ router.get('/', async (req, res) => {
 // Define routes for the dashboard
 router.get('/dashboard', async (req, res) => {
   try {
-
-     // Check if the user is authenticated
-     if (!req.session.user_id) {
+    // Check if the user is authenticated
+    if (!req.session.user_id) {
       // If the user is not authenticated, redirect them to the login page
-      res.redirect('/login');
-      return;
+      return res.redirect('/login');
     }
+
     // Get all blog posts for the current user and render them on the dashboard
     const blogPosts = await BlogPost.findAll({
       where: {
@@ -71,13 +70,15 @@ router.get('/dashboard', async (req, res) => {
     // Render the dashboard view with the main layout
     res.render('dashboard', {
       layout: 'main',
-      posts: serializedPosts,
+      blogposts: serializedPosts,
+      user: { username: req.session.username },
     });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
 });
+
 
 // Define routes for editing a blog post
 router.get('/edit-post/:id', async (req, res) => {
@@ -116,14 +117,12 @@ router.get('/edit-post/:id', async (req, res) => {
 // Define routes for the login page
 router.get('/login', (req, res) => {
   // Render the login view with the main layout
-  res.render('login', { layout: 'main' });
+  if (req.session.loggedIn) {
+    res.redirect('/dashboard');
+    return;
+  }
+  res.render('login');
 });
-
-// // Define routes for the signup page
-// router.get('/signup', (req, res) => {
-//   // Render the signup view with the main layout
-//   res.render('signup', { layout: 'main' });
-// });
 
 // Define routes for creating a new blog post
 router.get('/post', (req, res) => {

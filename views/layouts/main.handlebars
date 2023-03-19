@@ -9,7 +9,7 @@
     <nav>
       <ul>
         <li><a href="/">Home</a></li>
-        {{#if user}}
+        {{#if user.username}}
         <li><a href="/dashboard">Dashboard</a></li>
         <li><a href="/logout">Logout</a></li>
         {{else}}

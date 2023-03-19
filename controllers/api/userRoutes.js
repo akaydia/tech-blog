@@ -82,33 +82,26 @@ router.delete('/:id', withAuth, async (req, res) => {
 
 // POST login
 router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
   try {
-    const userData = await User.findOne({ where: { email: req.body.email } });
-    if (!userData) {
-      res
-        .status(400)
-        .json({ message: 'Incorrect email or password, please try again' });
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      res.status(401).send('Invalid email or password');
       return;
-    } // if
-    const validPassword = await userData.checkPassword(req.body.password);
+    }
+    const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      res
-        .status(400)
-        .json({ message: 'Incorrect email or password, please try again' });
+      res.status(401).send('Invalid email or password');
       return;
-    } // if
-    req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.username = userData.username;
-      req.session.loggedIn = true;
-      res
-        .status(200)
-        .json({ user: userData, message: 'You are now logged in!' });
-    }); // req.session.save
+    }
+    req.session.user = user; // Set the user object in the session
+    req.session.user_id = user.id; // Set the user id in the session
+    res.redirect('/dashboard');
   } catch (err) {
-    res.status(400).json(err);
-  } // catch
-}); // POST login
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 
 // POST logout
 router.post('/logout', (req, res) => {
