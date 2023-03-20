@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { BlogPost, User, Comment } = require('../models');
+const withAuth = require('../utils/auth');
 
 // Define routes for the homepage
 router.get('/', async (req, res) => {
@@ -24,19 +25,50 @@ router.get('/', async (req, res) => {
 
     const serializedPosts = blogPosts.map((post) => post.get({ plain: true }));
 
-    // Render the homepage view with the main layout
-    res.render('home', {
-      layout: 'main',
-      posts: serializedPosts,
-    });
+    // Check if the user is authenticated
+    if (req.session.loggedIn) {
+      // Render the dashboard view with the main layout
+      const blogPosts = await BlogPost.findAll({
+        where: {
+          user_id: req.session.user_id,
+        },
+        include: [
+          {
+            model: User,
+            attributes: ['username'],
+          },
+          {
+            model: Comment,
+            attributes: ['content', 'date_created', 'user_id'],
+            include: {
+              model: User,
+              attributes: ['username'],
+            },
+          },
+        ],
+      });
+
+      const serializedPosts = blogPosts.map((post) => post.get({ plain: true }));
+
+      res.render('dashboard', {
+        layout: 'main',
+        blogposts: serializedPosts,
+        user: { username: req.session.username },
+      });
+    } else {
+      // Render the homepage view with the main layout
+      res.render('home', {
+        layout: 'main',
+        posts: serializedPosts,
+      });
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
 });
 
-// Define routes for the dashboard
-router.get('/dashboard', async (req, res) => {
+router.get('/dashboard', withAuth, async (req, res) => {
   try {
     // Check if the user is authenticated
     if (!req.session.user_id) {
@@ -78,7 +110,6 @@ router.get('/dashboard', async (req, res) => {
     res.status(500).json(err);
   }
 });
-
 
 // Define routes for editing a blog post
 router.get('/edit-post/:id', async (req, res) => {
@@ -129,4 +160,5 @@ router.get('/post', (req, res) => {
   // Render the post view with the main layout
   res.render('post', { layout: 'main' });
 });
+
 module.exports = router;

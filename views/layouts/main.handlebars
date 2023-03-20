@@ -1,26 +1,28 @@
-<!DOCTYPE html>
 <html>
-<head>
-  <title>Blog App</title>
-  <link rel="stylesheet" href="./styles/styles.css">
-</head>
-<body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="/">Home</a></li>
-        {{#if user.username}}
-        <li><a href="/dashboard">Dashboard</a></li>
-        <li><a href="/logout">Logout</a></li>
-        {{else}}
-        <li><a href="/login">Login</a></li>
-        {{/if}}
-      </ul>
-    </nav>
-  </header>
-  
-  <main>
-    {{{body}}}
-  </main>
-</body>
+  <head>
+    <title>Blog App</title>
+    <link rel='stylesheet' href='./styles/styles.css' />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href='/'>Home</a></li>
+          {{#if user.username}}
+            <li><a href='/dashboard'>Dashboard</a></li>
+            <li><a href='/logout'>Logout</a></li>
+          {{else}}
+            <li><a href='/login'>Login</a></li>
+          {{/if}}
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      {{{body}}}
+    </main>
+    {{#if loggedIn}}
+      <script src='/js/logout.js'></script>
+    {{/if}}
+  </body>
 </html>

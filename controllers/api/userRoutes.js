@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const withAuth = require('../../utils/auth');
 const { User } = require('../../models');
+const bcrypt = require('bcrypt');
 
 // Define user routes
 // GET all users
@@ -89,6 +90,8 @@ router.post('/login', async (req, res) => {
       res.status(401).send('Invalid email or password');
       return;
     }
+    console.log("user.password:", user.password);
+    console.log("password:", password);
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
       res.status(401).send('Invalid email or password');
