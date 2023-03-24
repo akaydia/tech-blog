@@ -21,5 +21,8 @@ MySQL
 Heroku
 Git
 
+## Screenshot
+![image of website](images/rickster-techblog.herokuapp.com_.png)
 ## Link to Deploy
 [Website](https://rickster-techblog.herokuapp.com/)
+
