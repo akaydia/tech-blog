@@ -2,21 +2,21 @@
 <section>
   <div>
     <h3>{{blog.title}}</h3>
-    <p>{{{blog.contents}}}</p>
+    <p>{{{blog.content}}}</p>
     <p>By: {{blog.user.name}}</p>
     <p>Date Created: {{format_date blog.date_created }}</p>
     <p style="display:none" id="blogID">{{blog.id}}</p>
     <p style="display:none" id="userID">{{blog.user_id}}</p>
   </div>
-  {{#if userCanEdit}}
+  {{#if userEdit}}
     <form class="form signup-form">
         <div class="form-group">
           <label for="name-signup">New Title:</label>
-          <input class="form-input" type="text" id="NEWblog-name" />
+          <input class="form-input" type="text" id="blog-name"/>
         </div>
         <div class="form-group">
           <label for="name-signup">New Content:</label>
-          <input class="form-input" type="text" id="NEWblog-desc" />
+          <input class="form-input" type="text" id="blog-desc"/>
         </div>
     </form>
     <button data-id='{{blog.id}}' id="Edit" >Edit</button> 
@@ -30,7 +30,7 @@
   <form class="form signup-form">
       <div class="form-group">
         <label for="name-signup">Comment:</label>
-        <input class="form-input" type="text" id="Comment" />
+        <input class="form-input" type="text" id="comment" />
       </div>
       <div class="form-group">
         <button class="btn btn-primary" type="submit" id="comment-button">Post</button>
@@ -40,4 +40,4 @@
 {{else}}
 <a href="/login">You must login first to view this page</a>
 {{/if}}
-<script src="../js/blog.js"></script>
+<script src="../js/blogpost.js"></script>

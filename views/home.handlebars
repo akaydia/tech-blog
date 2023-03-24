@@ -1,17 +1,14 @@
-{{#each Blog as |Blog| }}
-<div class="row mb-4 project">
-  <div class="col-md-5">
+{{#each blog as |blog| }}
+  <div>
     <h2>
-      <!-- Call helper function with triple brackets to render the emoji span as HTML -->
-      <a href="/Blogpost/{{Blog.id}}">{{Blog.title}}</a>
+      <a href="/blogpost/{{blog.id}}">{{blog.title}}</a>
     </h2>
 
-    <p>Created by {{Blog.user.name}} on {{ format_date Blog.date_created}}</p>
+    <p>Created by {{blog.user.name}} on {{ format_date blog.date_created}}</p>
   </div>
   <div class="col-md-7">
     <p>
-      {{Blog.contents}}
+      {{blog.contents}}
     </p>
   </div>
-</div>
 {{/each}}

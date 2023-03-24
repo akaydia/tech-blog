@@ -16,11 +16,11 @@ router.get('/', async (req, res) => {
     });
 
     // Serialize data so the template can read it
-    const Blog = blogData.map((project) => project.get({ plain: true }));
+    const blog = blogData.map((project) => project.get({ plain: true }));
 
     // Pass serialized data and session flag into template
     res.render('home', {
-      Blog,
+      blog,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
@@ -61,16 +61,16 @@ router.get('/blogpost/:id', async (req, res) => {
     const comments = commentData.map((project) => project.get({ plain: true }));
 
     // Check if user is logged in
-    var userCanEdit = false;
+    var userEdit = false;
     if (blog.user_id == req.session.user_id) {
-      userCanEdit = true;
+      userEdit = true;
     }
 
     res.render('blog', {
       blog,
       comments,
       logged_in: req.session.logged_in,
-      userCanEdit,
+      userEdit,
     });
   } catch (err) {
     res.status(500).json(err);

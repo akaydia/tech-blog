@@ -1,11 +1,11 @@
 {{#if logged_in}}
   <h2>Dashboard</h2>
 
-  <div id="myBlogs">
-    {{#each blog}}
+  <div id="blogs">
+    {{#each blog as |blog|}}
       <ul>
-        <h3><a href="/Blogpost/{{{id}}}">{{{title}}}</a></h3>
-        <button data-id="{{id}}" class="delete">Delete</button>
+        <h3><a href="/blogpost/{{{id}}}">{{{blog.title}}}</a></h3>
+        <button data-id="{{blog.id}}" class="delete">Delete</button>
       </ul>
     {{/each}}
   </div>
@@ -30,4 +30,4 @@
   <a href="/login">You must log in first to view this page.</a>
 {{/if}}
 
-<script src="./js/post.js"></script>
+<script src="./js/main.js"></script>

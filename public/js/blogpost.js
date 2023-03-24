@@ -1,14 +1,12 @@
-
-// ------------Post Comment Function------------
 const postcomment = async (event) => {
     event.preventDefault();
   
-    const content = await document.querySelector('#Comment').value.trim();
+    const content = await document.querySelector('#comment').value.trim();
     const blogpost_id  = await document.querySelector('#blogID').innerHTML;
   
   
-    if (comment_descr) {
-      const response = await fetch("/api/BlogPosts", {
+    if (content) {
+      const response = await fetch("/api/blogposts", {
         method: 'POST',
         body: JSON.stringify({ content, blogpost_id }),
         headers: {
@@ -17,24 +15,23 @@ const postcomment = async (event) => {
       });
   
       if (response.ok) {
-        document.location.replace(`/BlogPost/${blogpost_id}`);
+        document.location.replace(`/blogposts/${blogpost_id}`);
       } else {
         alert('Failed to create comment');
       }
     }
   };
 
-  // ------------Edit Blog Function------------
   const editblog = async (event) => {
     event.preventDefault();
   
-    const title = await document.querySelector('#NEWblog-name').value.trim();
-    const description  = await document.querySelector('#NEWblog-desc').value.trim();
+    const title = await document.querySelector('#blog-name').value.trim();
+    const description  = await document.querySelector('#blog-desc').value.trim();
     const blogpost_id  = await document.querySelector('#blogID').innerHTML;
   
   
     if (title && description) {
-      const response = await fetch(`/api/BlogPosts`, {
+      const response = await fetch(`/api/blogposts`, {
         method: 'PUT',
         body: JSON.stringify({ title, description, blogpost_id}),
         headers: {
@@ -43,14 +40,13 @@ const postcomment = async (event) => {
       });
   
       if (response.ok) {
-        document.location.replace(`/Blogpost/${blogpost_id}`);
+        document.location.replace(`/blogpost/${blogpost_id}`);
       } else {
         alert('Failed to edit');
       }
     }
   };
   
-//------------listners------------
   document
     .querySelector('#comment-button')
     .addEventListener('click', postcomment);
