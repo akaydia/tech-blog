@@ -1,16 +1,17 @@
-<section>
-  {{#each posts}}
-    <article>
-      <h2>{{title}}</h2>
-      <p>{{content}}</p>
-      <footer>
-        <p>Posted by: {{user.username}}</p>
-        <ul>
-          {{#each comments}}
-            <li>{{this.content}} - {{this.user.username}}</li>
-          {{/each}}
-        </ul>
-      </footer>
-    </article>
-  {{/each}}
-</section>
+{{#each Blog as |Blog| }}
+<div class="row mb-4 project">
+  <div class="col-md-5">
+    <h2>
+      <!-- Call helper function with triple brackets to render the emoji span as HTML -->
+      <a href="/Blogpost/{{Blog.id}}">{{Blog.title}}</a>
+    </h2>
+
+    <p>Created by {{Blog.user.name}} on {{ format_date Blog.date_created}}</p>
+  </div>
+  <div class="col-md-7">
+    <p>
+      {{Blog.contents}}
+    </p>
+  </div>
+</div>
+{{/each}}

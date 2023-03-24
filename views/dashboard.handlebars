@@ -1,22 +1,33 @@
-<h1>Welcome to your dashboard, {{user.username}}!</h1>
+{{#if logged_in}}
+  <h2>Dashboard</h2>
 
-<h2>Your Blog Posts</h2>
-
-{{#each blogposts}}
-  <div>
-    <h3>{{title}}</h3>
-    <p>{{content}}</p>
-    <a href="/edit/{{id}}">Edit</a>
-    <form action="/delete/{{id}}" method="POST">
-      <button type="submit">Delete</button>
-    </form>
+  <div id="myBlogs">
+    {{#each blog}}
+      <ul>
+        <h3><a href="/Blogpost/{{{id}}}">{{{title}}}</a></h3>
+        <button data-id="{{id}}" class="delete">Delete</button>
+      </ul>
+    {{/each}}
   </div>
-{{/each}}
 
-<h2>Create a New Blog Post</h2>
+  <form class="form signup-form">
+    <div class="form-group">
+      <label for="blog-name">Title:</label>
+      <input class="form-input" type="text" id="blog-name" name="blog-name" required>
+    </div>
 
-<form action="/create" method="POST">
-  <input type="text" name="title" placeholder="Title">
-  <textarea name="content" placeholder="Content"></textarea>
-  <button type="submit">Create Post</button>
-</form>
+    <div class="form-group">
+      <label for="blog-desc">Content:</label>
+      <textarea class="form-input" id="blog-desc" name="blog-desc" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit" id="post-button">Post</button>
+    </div>
+  </form>
+
+{{else}}
+  <a href="/login">You must log in first to view this page.</a>
+{{/if}}
+
+<script src="./js/post.js"></script>

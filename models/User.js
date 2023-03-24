@@ -12,7 +12,7 @@ User.init(
       autoIncrement: true,
     }, // id
 
-    username: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,

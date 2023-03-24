@@ -1,46 +1,58 @@
-const newPostFormHandler = async (event) => {
-    event.preventDefault();
-  
-    const title = document.querySelector('#post-title').value.trim();
-    const body = document.querySelector('#post-body').value.trim();
-  
-    if (title && body) {
-      const response = await fetch('/api/posts', {
-        method: 'POST',
-        body: JSON.stringify({ title, body }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      if (response.ok) {
-        document.location.replace('/dashboard');
-      } else {
-        alert('Failed to create post');
-      }
+// ------------ post new blog function ------------
+const newFormHandler = async (event) => {
+  event.preventDefault();
+
+  const title = await document.querySelector('#blog-name').value.trim();
+  const description = await document.querySelector('#blog-desc').value.trim();
+
+  console.log(JSON.stringify({ title, description }))
+
+  if (title && description) {
+    const response = await fetch("api/dashboard", {
+      method: 'POST',
+      body: JSON.stringify({ title, description }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      document.location.replace('/dashboard');
+    } else {
+      alert('Failed to create blog');
     }
-  };
-  
-  const delPostButtonHandler = async (event) => {
+  }
+};
+
+// ------------ delete blog function------------
+const ButtonHandler = async (event) => {
+  if(event.target.value = "Delete") {
+
+    console.log(event.target.value)
+
     if (event.target.hasAttribute('data-id')) {
       const id = event.target.getAttribute('data-id');
-  
-      const response = await fetch(`/api/posts/${id}`, {
+
+      const response = await fetch(`/api/dashboard/${id}`, {
         method: 'DELETE',
       });
-  
+
       if (response.ok) {
         document.location.replace('/dashboard');
       } else {
-        alert('Failed to delete post');
+        alert('Failed to delete blog');
       }
     }
-  };
-  
-  document
-    .querySelector('.new-post-form')
-    .addEventListener('submit', newPostFormHandler);
-  
-  document
-    .querySelector('.post-list')
-    .addEventListener('click', delPostButtonHandler);
+  } else {
+    console.log("nothing")
+  }
+};
+
+// ------------listners------------
+document
+  .querySelector('#post-button')
+  .addEventListener('click', newFormHandler);
+
+document
+  .querySelector('#myBlogs')
+  .addEventListener('click', ButtonHandler);

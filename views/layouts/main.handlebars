@@ -8,9 +8,9 @@
       <nav>
         <ul>
           <li><a href='/'>Home</a></li>
-          {{#if user.username}}
-            <li><a href='/dashboard'>Dashboard</a></li>
-            <li><a href='/logout'>Logout</a></li>
+          <li><a href='/dashboard'>Dashboard</a></li>
+          {{#if logged_in}}
+             <button class="no-button" id="logout">logout</button>
           {{else}}
             <li><a href='/login'>Login</a></li>
           {{/if}}
@@ -21,7 +21,7 @@
     <main>
       {{{body}}}
     </main>
-    {{#if loggedIn}}
+    {{#if logged_in}}
       <script src='/js/logout.js'></script>
     {{/if}}
   </body>
