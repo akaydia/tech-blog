@@ -22,7 +22,7 @@ Heroku
 Git
 
 ## Screenshot
-![image of website](images/rickster-techblog.herokuapp.com_.png)
+![image of website](images/rickster-techblog.herokuapp.com_dashboard.png)
 ## Link to Deploy
 [Website](https://rickster-techblog.herokuapp.com/)
 
