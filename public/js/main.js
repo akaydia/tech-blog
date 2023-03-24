@@ -1,4 +1,3 @@
-// ------------ post new blog function ------------
 const newFormHandler = async (event) => {
   event.preventDefault();
 
@@ -8,7 +7,7 @@ const newFormHandler = async (event) => {
   console.log(JSON.stringify({ title, description }))
 
   if (title && description) {
-    const response = await fetch("api/dashboard", {
+    const response = await fetch("/api/dashboard", {
       method: 'POST',
       body: JSON.stringify({ title, description }),
       headers: {
@@ -24,11 +23,8 @@ const newFormHandler = async (event) => {
   }
 };
 
-// ------------ delete blog function------------
 const ButtonHandler = async (event) => {
   if(event.target.value = "Delete") {
-
-    console.log(event.target.value)
 
     if (event.target.hasAttribute('data-id')) {
       const id = event.target.getAttribute('data-id');
@@ -44,15 +40,14 @@ const ButtonHandler = async (event) => {
       }
     }
   } else {
-    console.log("nothing")
+    console.log("Error")
   }
 };
 
-// ------------listners------------
 document
   .querySelector('#post-button')
   .addEventListener('click', newFormHandler);
 
 document
-  .querySelector('#myBlogs')
+  .querySelector('#blogs')
   .addEventListener('click', ButtonHandler);

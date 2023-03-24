@@ -2,8 +2,9 @@ const postcomment = async (event) => {
     event.preventDefault();
   
     const content = await document.querySelector('#comment').value.trim();
-    const blogpost_id  = await document.querySelector('#blogID').innerHTML;
-  
+    const blogpost_id  = await document.querySelector('#blogID').innerText;
+    console.log(content);
+    console.log(blogpost_id);
   
     if (content) {
       const response = await fetch("/api/blogposts", {
@@ -15,7 +16,7 @@ const postcomment = async (event) => {
       });
   
       if (response.ok) {
-        document.location.replace(`/blogposts/${blogpost_id}`);
+        document.location.replace(`/blogpost/${blogpost_id}`);
       } else {
         alert('Failed to create comment');
       }
@@ -28,7 +29,6 @@ const postcomment = async (event) => {
     const title = await document.querySelector('#blog-name').value.trim();
     const description  = await document.querySelector('#blog-desc').value.trim();
     const blogpost_id  = await document.querySelector('#blogID').innerHTML;
-  
   
     if (title && description) {
       const response = await fetch(`/api/blogposts`, {
